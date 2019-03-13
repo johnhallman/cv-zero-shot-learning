@@ -1,5 +1,6 @@
 # cv-zero-shot-learning
 Model implementation and experiments for zero-shot learning (COS 529 Spring 2019, assignment 2)
+
 Author: John Hallman
 Instructor: Olga Russakovsky, Jia Deng
 
