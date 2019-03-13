@@ -136,9 +136,7 @@ def build_model(create_model, train_classes, test_classes, animal_to_imgs, anima
 
 	# cross validation
 	cross_val_accuracy = []
-	"""
 	for i, cross_test_classes in enumerate(split_classes):
-		if i > 0: break
 		print("Cross-validation for round {} of {}".format(i+1, k))
 		cross_train_classes = [c for c in train_classes if c not in cross_test_classes]
 		x_train, y_train, l_train = classes_to_data(cross_train_classes, animal_to_imgs, animal_to_feat)
@@ -150,7 +148,6 @@ def build_model(create_model, train_classes, test_classes, animal_to_imgs, anima
 		current_score = compute_score(model, cross_test_classes)
 		print("Current round cross-validation accuracy: {}".format(current_score))
 		cross_val_accuracy.append(current_score)
-	"""
 
 	# full model
 	print("Training full model")
@@ -158,7 +155,7 @@ def build_model(create_model, train_classes, test_classes, animal_to_imgs, anima
 	x_test, y_test, l_test = classes_to_data(test_classes, animal_to_imgs, animal_to_feat)
 
 	model = create_model()
-	#checkpoint = ModelCheckpoint(filepath="full-model-{epoch:02d}.hdf5", period=10)
+	checkpoint = ModelCheckpoint(filepath="full-model-{epoch:02d}.hdf5", period=10)
 	model.fit(np.array(x_train), np.array(y_train), epochs=epochs, verbose=2) # callbacks=[checkpoint]
 	test_accuracy = compute_score(model, test_classes)
 	return model, test_accuracy, np.mean(cross_val_accuracy)
@@ -185,15 +182,15 @@ if __name__ == "__main__":
 	print("Model 1: acc, cross_acc = {}, {}".format(acc, cross_acc))
 	print("Model 1 saved to " + model_1_filename)
 
-	"""
+
 	# train and store model 2
 	print("Training and testing model 2 for 100 epochs")
 	model, acc, cross_acc = build_model(model_2, train_classes, test_classes, animal_to_imgs, animal_to_feat, epochs=100)
 	model_2_filename = "final_model_2.h5"
-	#model.save(model_2_filename)
+	model.save(model_2_filename)
 	print("Model 2: acc, cross_acc = {}, {}".format(acc, cross_acc))
-	#print("Model 2 saved to " + model_2_filename)
-	"""
+	print("Model 2 saved to " + model_2_filename)
+
 
 
 
